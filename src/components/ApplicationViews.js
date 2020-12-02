@@ -1,33 +1,33 @@
 import React from "react"
 import { Route } from "react-router-dom"
-import { GameList } from "./game/GameList.js"
-import { GameProvider } from "./game/GameProvider.js"
-import { EventList } from "./event/EventList.js"
-import { EventProvider } from "./event/EventProvider.js"
-import { GameForm } from "./game/GameForm.js"
-import { EventForm } from "./event/EventForm.js"
+import { GameList } from './game/GameList'
+import { EventList } from './event/EventList'
+import { GameProvider } from './game/GameProvider'
+import { EventProvider } from './event/EventProvider'
+import { ProfileProvider } from './profile/ProfileProvider'
+import { Profile } from './profile/Profile'
+import { GameForm } from './game/GameForm'
+import { EventForm } from './event/EventForm'
 
 export const ApplicationViews = () => {
     return <>
         <main style={{
             margin: "5rem 2rem",
-            lineHeight: "1.75rem"
+            backgroundColor: "lightgoldenrodyellow"
         }}>
             <GameProvider>
+                <Route exact path="/" render={props => <GameList {...props} />} />
                 <Route exact path="/games/new" render={props => <GameForm {...props} />} />
-                <Route exact path="/">
-                    <GameList />
-                </Route>
+                <EventProvider>
+                    <Route exact path="/events"render={props => <EventList {...props}/>} />
+                    <Route exact path="/events/new"render={props => <EventForm {...props}/>} />
+                </EventProvider>
             </GameProvider>
-
-            <EventProvider>
-                <Route exact path="/events">
-                    <EventList />
+            <ProfileProvider>
+                <Route exact path="/profile">
+                    <Profile />
                 </Route>
-                <GameProvider>
-                    <Route exact path="/events/new" render={props => <EventForm {...props} />} />
-                </GameProvider>
-            </EventProvider>
+            </ProfileProvider>
         </main>
     </>
 }
